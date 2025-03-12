@@ -72,15 +72,3 @@ To generate and view the test report:
 npx playwright show-report
 ```
 
-## Extending the Tests to New Markets
-To add a new market:
-1. Identify the new Ploom website URL.
-2. Update the configuration file to include the new base URL.
-3. Ensure tests dynamically adjust based on the selected market.
-
-## Reporting Issues
-If you encounter any issues or have suggestions for improvement, please open an issue in this repository.
-
----
-This test suite ensures smooth e-commerce operations for Ploom across different markets while maintaining flexibility and scalability.
-
