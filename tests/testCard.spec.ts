@@ -1,9 +1,9 @@
 import { test, expect } from "@playwright/test";
 import { VisitPage } from "../page-objects/visitPage";
 import { ApiRequest } from "../page-objects/apiRequest";
+import { GetProduct } from "../page-objects/getProduct";
 
-const shopTitle = /Sklep|Shop/;
-const productName = "Ploom X Advanced";
+const productName: string = "Ploom X Advanced";
 
 test.describe("Card actions", () => {
   test.beforeEach(async ({ page }) => {
@@ -12,15 +12,10 @@ test.describe("Card actions", () => {
   });
 
   test("Add product to the cart", async ({ page }) => {
-    const currentUrl = page.url();
-    await page
-      .locator('a[data-testid^="headerItem"]', { hasText: shopTitle })
-      .click();
-    await page.mouse.move(0, 0);
-    // For the Polish market, there is no selector with the value data-sku="ploom-x-advanced", which is why I suggested a conditional solution here
-    const productSku = currentUrl.endsWith("pl")
-      ? "15147889"
-      : "ploom-x-advanced";
+    const visitPage = new VisitPage(page);
+    await visitPage.visitShopPage();
+    const getProduct = new GetProduct(page);
+    const productSku = await getProduct.getProductSku();
     await page.locator(`div[data-sku="${productSku}"]`).click();
     await page.getByTestId("pdpAddToProduct").click();
     const count = page
